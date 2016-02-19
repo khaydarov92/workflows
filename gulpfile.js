@@ -1,10 +1,12 @@
 var gulp = require('gulp'),
-	gutil = require('gulp-util'),
+	gutil = require('gulp-util'), // display log in terminal
 	coffee = require('gulp-coffee'),
 	browserify = require('gulp-browserify'),
 	compass = require('gulp-compass'),
-	connect = require('gulp-connect'),
-	concat = require('gulp-concat');
+	connect = require('gulp-connect'), // server and live reload
+	gulpif = require('gulp-if'), // if statement for gulp
+	uglify = require('gulp-uglify'), // js minify
+	concat = require('gulp-concat'); // concat files
 
 var env,
 	coffeeSources,
@@ -25,6 +27,7 @@ if (env==='development') {
 	sassStyle = 'compressed';
 }
 
+// links ------------------------------------------
 coffeeSources = ['components/coffee/*.coffee'];
 jsSources = [
 	'components/scripts/rclick.js',
@@ -49,6 +52,7 @@ gulp.task('js', function() {
 	gulp.src(jsSources)
 		.pipe(concat('script.js'))
 		.pipe(browserify())
+		.pipe(gulpif(env === 'production', uglify()))
 		.pipe(gulp.dest(outputDir + 'js'))
 		.pipe(connect.reload())
 });
