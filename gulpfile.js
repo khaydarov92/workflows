@@ -53,4 +53,4 @@ gulp.task('watch', function() {
 });
 
 // default task for runing all the tasks
-gulp.task('default', ['coffee', 'js', 'compass']);
+gulp.task('default', ['coffee', 'js', 'compass', 'watch']);
